@@ -1,11 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { auth, googleProvider } from '../firebase-config'
 import { createUserWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth'
 
 function Auth() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
 
   const signIn = async () => {
     if (email === '' || password === '') {
@@ -20,7 +19,6 @@ function Auth() {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password)
-      loadUser()
       setEmail('')
       setPassword('')
     } catch (error) {
@@ -39,36 +37,35 @@ function Auth() {
   const logout = async () => {
     try {
       await signOut(auth)
-      setUser(null)
     } catch (error) {
       console.error(error)
     }
   }
 
-  const loadUser = () => {
-    setUser(auth?.currentUser)
-  }
-
-  useEffect(() => {
-    loadUser()
-  }, [])
-
   return (
-    <div>
-      <input 
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        placeholder="Passwod"
-        value={password}
-        type="password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={signIn}>Sign in</button>
-      <button onClick={signInWithGoogle}>Sign in with Google</button>
-      { user != null && <button onClick={logout}>Logout</button> }
+    <div className='d-flex flex-column align-items-center flex-content-center'>
+      <div className="my-3">
+        <input 
+          className="form-control"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+      <div className="mb-3">
+        <input
+          className="form-control"
+          placeholder="Passwod"
+          value={password}
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+      <div className="d-flex flex-column align-items-center ">
+        { auth?.currentUser?.uid == null && <button className="btn btn-dark my-1" onClick={signIn}>Sign in</button> }
+        { auth?.currentUser?.uid == null && <button className="btn btn-dark my-1" onClick={signInWithGoogle}>Sign in with Google</button> }
+        { auth?.currentUser?.uid != null && <button className="btn btn-dark my-1" onClick={logout}>Logout</button> }
+      </div>
     </div>
   )
 }

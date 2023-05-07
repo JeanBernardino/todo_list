@@ -38,7 +38,10 @@
 }
 
 
-.form {
-  display: flex;
-  justify-content: center;
+.task-input{
+  width: 60% !important;
+}
+
+.task-select{
+  width: 20% !important;
 }
