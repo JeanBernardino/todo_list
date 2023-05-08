@@ -38,10 +38,8 @@
 }
 
 
-.task-input{
-  width: 60% !important;
-}
-
-.task-select{
-  width: 20% !important;
+@media screen and (min-width: 1200px) {
+  .task-select{
+    width: 20% !important;
+  }
 }

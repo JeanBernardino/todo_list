@@ -1,14 +1,6 @@
-import Auth from './components/auth'
-import Home from './components/home'
+import "./App.css";
+import { AppRoutes } from "./routes/AppRoutes";
 
-function App() {
-  return (
-    <div className='container'>
-      <Auth />
-      <br></br>
-      <Home />
-    </div>
-  )
+export default function App() {
+  return <AppRoutes />;
 }
-
-export default App
